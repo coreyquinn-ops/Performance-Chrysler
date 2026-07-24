@@ -3,96 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <title>Chrysler Overlay Tool</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&display=swap" rel="stylesheet">
     <style>
-        :root { 
-            --brand-black: #000000; 
-            --bg-gray: #f0f2f5; 
+        /* ---------- Brand font: Proxima Nova ----------
+           These three .woff2 files must sit in the same folder as index.html. */
+        @font-face {
+            font-family: 'Proxima Nova';
+            src: url('ProximaNova-Regular.woff2') format('woff2');
+            font-weight: 400;
+            font-style: normal;
+            font-display: block;
         }
-        
-        body { 
-            font-family: 'Poppins', sans-serif; 
-            background: var(--bg-gray); 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            padding: 40px 20px; 
-            margin: 0; 
+        @font-face {
+            font-family: 'Proxima Nova';
+            src: url('ProximaNova-Semibold.woff2') format('woff2');
+            font-weight: 600;
+            font-style: normal;
+            font-display: block;
         }
-        
-        .container { 
-            background: white; 
-            padding: 35px; 
-            border-radius: 16px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
-            max-width: 1000px; 
-            width: 100%; 
-            text-align: center; 
-        }
-        
-        h2 { 
-            margin-top: 0; 
-            color: var(--brand-black); 
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        @font-face {
+            font-family: 'Proxima Nova';
+            src: url('ProximaNova-Bold.woff2') format('woff2');
+            font-weight: 700;
+            font-style: normal;
+            font-display: block;
         }
 
-        .controls { 
-            display: flex; 
-            justify-content: center; 
-            gap: 20px; 
-            margin-bottom: 30px; 
-            align-items: flex-end; 
+        :root {
+            --brand-black: #000000;
+            --bg-gray: #f0f2f5;
+            --brand-font: 'Proxima Nova', 'Helvetica Neue', Arial, sans-serif;
         }
-        
-        .field-group { 
-            display: flex; 
-            flex-direction: column; 
-            text-align: left; 
+
+        body {
+            font-family: var(--brand-font);
+            background: var(--bg-gray);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            margin: 0;
         }
-        
-        label { 
-            font-size: 11px; 
-            font-weight: 700; 
-            color: #666; 
-            margin-bottom: 8px; 
-            text-transform: uppercase; 
+
+        .container {
+            background: white;
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 1000px;
+            width: 100%;
+            text-align: center;
         }
-        
-        input { 
-            padding: 12px; 
-            border-radius: 8px; 
-            border: 2px solid var(--brand-black); 
-            font-size: 24px; 
-            font-weight: 800; 
-            width: 180px; 
-            text-align: center; 
-            outline: none; 
+
+        h2 {
+            margin-top: 0;
+            color: var(--brand-black);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
         }
-        
-        button { 
-            background: var(--brand-black); 
-            color: white; 
-            border: none; 
-            padding: 16px 32px; 
-            border-radius: 8px; 
-            font-size: 16px; 
-            font-weight: 800; 
-            cursor: pointer; 
-            transition: 0.2s; 
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 12px;
+            align-items: flex-end;
+            flex-wrap: wrap;
         }
-        
-        button:hover { 
-            background: #333; 
-            transform: translateY(-2px); 
+
+        .field-group {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
         }
-        
-        canvas { 
-            border: 1px solid #eee; 
-            max-width: 100%; 
-            height: auto; 
-            border-radius: 8px; 
+
+        label {
+            font-size: 11px;
+            font-weight: 700;
+            color: #666;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        input {
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid var(--brand-black);
+            font-size: 24px;
+            font-weight: 700;
+            width: 180px;
+            text-align: center;
+            outline: none;
+            font-family: var(--brand-font);
+        }
+
+        /* Descriptor field is wide and left-aligned since it holds a phrase */
+        #descriptorInput {
+            width: 420px;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: left;
+        }
+
+        .presets {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .presets button {
+            background: #eef0f3;
+            color: #333;
+            border: 1px solid #d5d9de;
+            padding: 6px 10px;
+            font-size: 11px;
+            font-weight: 700;
+            border-radius: 6px;
+        }
+
+        .presets button:hover {
+            background: #e2e5ea;
+            transform: none;
+        }
+
+        .meta {
+            font-size: 11px;
+            font-weight: 600;
+            color: #888;
+            margin-top: 6px;
+            min-height: 16px;
+        }
+
+        .meta.warn { color: #c0392b; }
+
+        button {
+            background: var(--brand-black);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: var(--brand-font);
+        }
+
+        button:hover {
+            background: #333;
+            transform: translateY(-2px);
+        }
+
+        canvas {
+            border: 1px solid #eee;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
             background-color: #fff;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -103,11 +171,27 @@
 
     <div class="controls">
         <div class="field-group">
+            <label>Rate Descriptor</label>
+            <input type="text" id="descriptorInput"
+                   value="Alternative Rate Financing As Low As"
+                   placeholder="Alternative Rate Financing As Low As"
+                   maxlength="44">
+            <div class="presets">
+                <button type="button" data-preset="Alternative Rate Financing As Low As">Alternative</button>
+                <button type="button" data-preset="Standard Rate Financing As Low As">Standard</button>
+                <button type="button" data-preset="Lease From As Low As">Lease</button>
+            </div>
+        </div>
+
+        <div class="field-group">
             <label>Finance Rate</label>
             <input type="text" id="priceInput" value="" placeholder="---" maxlength="4">
         </div>
+
         <button id="downloadBtn">Download Final PNG</button>
     </div>
+
+    <div class="meta" id="charMeta"></div>
 
     <canvas id="canvas" width="1280" height="960"></canvas>
 </div>
@@ -116,46 +200,144 @@
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
     const priceInput = document.getElementById('priceInput');
+    const descriptorInput = document.getElementById('descriptorInput');
+    const charMeta = document.getElementById('charMeta');
     const downloadBtn = document.getElementById('downloadBtn');
-    
-    // Core Coordinates
-    const X_POS = 810;     
-    const Y_POS = 120;      
-    const FONT_SIZE = 135; 
+
+    const BRAND_FONT = "'Proxima Nova'";
+
+    /* ---------- Rate number ----------
+       Sizes are cap-height matched to the previous Poppins build:
+       Poppins cap height is 0.70em, Proxima Nova is 0.667em, so every
+       size is scaled by ~1.049 to keep the artwork visually identical. */
+    const X_POS = 810;
+    const Y_POS = 120;
+    const FONT_SIZE = 142;      // was 135px Poppins
+    const RATE_WEIGHT = 700;    // Proxima Nova Bold
+
+    /* ---------- Rate descriptor ----------
+       Right-aligned so it ends flush with the "%*" glyph above the rate.
+       Auto-shrinks to stay inside DESC_MAX_W, which is what lets a single
+       field handle 21 -> 37+ characters without overflowing the divider. */
+    const DESC_RIGHT_X  = 1219; // right edge of the text block
+    const DESC_Y        = 27;   // vertical centre of the text
+    const DESC_MAX_W    = 440;  // usable width between divider bar and right edge
+    const DESC_FONT_MAX = 31;   // used when the phrase is short ("Lease From As Low As")
+    const DESC_FONT_MIN = 16;   // hard floor for very long phrases
+    const DESC_WEIGHT   = 700;  // Proxima Nova Bold; set to 600 for Semibold
 
     let templateImg = new Image();
     templateImg.src = "template.png";
-
     templateImg.onload = () => draw();
+
+    /* Canvas ignores @font-face until the face is actually downloaded, so load
+       the weights explicitly and redraw once they're ready. Without this the
+       first paint silently falls back to Arial. */
+    let fontsReady = false;
+    if (document.fonts && document.fonts.load) {
+        Promise.all([
+            document.fonts.load(`600 40px ${BRAND_FONT}`),
+            document.fonts.load(`700 40px ${BRAND_FONT}`)
+        ]).then(() => {
+            fontsReady = true;
+            draw();
+        }).catch(() => draw());
+    } else {
+        fontsReady = true;
+    }
+
+    /* Find the largest font size (within bounds) that fits maxWidth. */
+    function fitFontSize(text, maxWidth, maxSize, minSize, weight) {
+        let size = maxSize;
+        while (size > minSize) {
+            ctx.font = `${weight} ${size}px ${BRAND_FONT}`;
+            if (ctx.measureText(text).width <= maxWidth) return size;
+            size -= 0.5;
+        }
+        return minSize;
+    }
 
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(templateImg, 0, 0, 1280, 960);
-        
+        if (templateImg.complete && templateImg.naturalWidth) {
+            ctx.drawImage(templateImg, 0, 0, 1280, 960);
+        }
+
+        // --- Descriptor line ---
+        const desc = descriptorInput.value.trim();
+        if (desc !== "") {
+            const size = fitFontSize(desc, DESC_MAX_W, DESC_FONT_MAX, DESC_FONT_MIN, DESC_WEIGHT);
+            ctx.font = `${DESC_WEIGHT} ${size}px ${BRAND_FONT}`;
+            ctx.fillStyle = "white";
+            ctx.textAlign = "right";
+            ctx.textBaseline = "middle";
+
+            // If it still overflows at the minimum size, squeeze horizontally
+            // rather than run over the divider bar.
+            const w = ctx.measureText(desc).width;
+            if (w > DESC_MAX_W) {
+                ctx.save();
+                ctx.translate(DESC_RIGHT_X, DESC_Y);
+                ctx.scale(DESC_MAX_W / w, 1);
+                ctx.fillText(desc, 0, 0);
+                ctx.restore();
+            } else {
+                ctx.fillText(desc, DESC_RIGHT_X, DESC_Y);
+            }
+        }
+
+        // --- Rate number ---
         if (priceInput.value.trim() !== "") {
             ctx.fillStyle = "white";
-            ctx.font = `800 ${FONT_SIZE}px 'Poppins'`;
+            ctx.font = `${RATE_WEIGHT} ${FONT_SIZE}px ${BRAND_FONT}`;
             ctx.textAlign = "left";
-            ctx.textBaseline = "middle"; 
+            ctx.textBaseline = "middle";
             ctx.fillText(priceInput.value, X_POS, Y_POS);
         }
+
+        updateMeta();
     }
 
+    function updateMeta() {
+        const n = descriptorInput.value.trim().length;
+        const over = n > 44;
+        let msg = `Descriptor: ${n} character${n === 1 ? '' : 's'}` +
+            (n === 0 ? '' : over ? ' — too long, shorten the phrase' : ' — fits');
+        if (!fontsReady) msg += '   ·   loading Proxima Nova…';
+        charMeta.textContent = msg;
+        charMeta.classList.toggle('warn', over);
+    }
+
+    descriptorInput.addEventListener('input', draw);
     priceInput.addEventListener('input', draw);
+
+    document.querySelectorAll('.presets button').forEach(btn => {
+        btn.addEventListener('click', () => {
+            descriptorInput.value = btn.dataset.preset;
+            draw();
+        });
+    });
 
     downloadBtn.addEventListener('click', () => {
         if (priceInput.value.trim() === "") {
-            alert("Please enter a price before downloading.");
+            alert("Please enter a rate before downloading.");
+            return;
+        }
+        if (descriptorInput.value.trim() === "") {
+            alert("Please enter a rate descriptor before downloading.");
             return;
         }
 
+        const slug = descriptorInput.value.trim().replace(/[^A-Za-z0-9]+/g, '_').replace(/^_|_$/g, '');
         const link = document.createElement('a');
-        link.download = `Chrysler_Deal_${priceInput.value}.png`;
+        link.download = `Chrysler_${slug}_${priceInput.value}.png`;
         link.href = canvas.toDataURL("image/png");
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
     });
+
+    draw();
 </script>
 </body>
 </html>
